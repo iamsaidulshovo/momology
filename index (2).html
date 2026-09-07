@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MOMOLOGY | Crave & Chemistry</title>
+  <link rel="icon" type="image/png" href="logo.png">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts: Syne & Outfit -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Outfit', 'sans-serif'],
+            display: ['Syne', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              50: '#fff8ed',
+              500: '#f97316',
+              600: '#ea580c',
+              glow: '#ff6a00'
+            },
+            dark: {
+              950: '#090a0f',
+              900: '#11131a',
+              800: '#181b26',
+              700: '#232738'
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body { background-color: #090a0f; color: #f3f4f6; }
+    ::-webkit-scrollbar { width: 5px; height: 5px; }
+    ::-webkit-scrollbar-track { background: #090a0f; }
+    ::-webkit-scrollbar-thumb { background: #232738; border-radius: 99px; }
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    .glow-effect { box-shadow: 0 0 25px -5px rgba(234, 88, 12, 0.4); }
+  </style>
+</head>
+<body class="selection:bg-brand-600 selection:text-white pb-24 md:pb-10">
+
+  <!-- Top Announcement Bar -->
+  <div class="bg-gradient-to-r from-brand-600 via-amber-500 to-brand-600 text-black text-[11px] font-black py-1.5 px-4 text-center tracking-widest uppercase">
+    ⚡ Darul Khadem, Racecourse, Cumilla • 10% Loyalty Points Cashback on Every Order!
+  </div>
+
+  <!-- Header -->
+  <header class="sticky top-0 z-40 bg-dark-950/90 backdrop-blur-xl border-b border-dark-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between gap-4">
+      
+      <a href="#" class="flex items-center gap-3 shrink-0">
+        <img src="logo.png" alt="Momology Logo" class="h-10 w-10 sm:h-12 sm:w-12 rounded-2xl object-contain bg-dark-900 border border-dark-700 p-1" onerror="this.src='https://via.placeholder.com/48?text=M'">
+        <div>
+          <span class="font-display text-xl sm:text-2xl font-extrabold tracking-tight text-white block leading-none">MOMOLOGY</span>
+          <span class="text-[9px] uppercase tracking-[0.25em] text-brand-500 font-bold">Crave & Chemistry</span>
+        </div>
+      </a>
+
+      <!-- GPS Address Quick Trigger -->
+      <div onclick="openCheckoutModal()" class="hidden md:flex items-center gap-2 bg-dark-900 hover:bg-dark-800 border border-dark-700/80 px-3.5 py-1.5 rounded-full cursor-pointer transition">
+        <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+        <span class="text-xs text-slate-300 font-medium truncate max-w-[200px]" id="nav-location-text">Set Delivery Location...</span>
+        <span class="text-[10px] bg-dark-700 text-brand-500 px-2 py-0.5 rounded-full font-bold">GPS</span>
+      </div>
+
+      <!-- Action Navigation -->
+      <div class="flex items-center gap-2 sm:gap-3">
+        <a href="https://facebook.com/momoloogy" target="_blank" class="text-xs font-bold text-slate-300 hover:text-white bg-dark-900 hover:bg-dark-800 border border-dark-700 px-3 py-2 rounded-xl transition flex items-center gap-1.5">
+          <i class="fa-brands fa-facebook text-blue-500"></i>
+          <span class="hidden sm:inline">Facebook</span>
+        </a>
+
+        <button onclick="openTrackModal()" class="text-xs font-bold text-slate-300 hover:text-white bg-dark-900 hover:bg-dark-800 border border-dark-700 px-3 py-2 rounded-xl transition flex items-center gap-2">
+          <i class="fa-solid fa-satellite-dish text-brand-500"></i>
+          <span class="hidden sm:inline">Track Order</span>
+        </button>
+
+        <button onclick="toggleCartDrawer()" class="relative bg-brand-600 hover:bg-brand-500 text-white font-extrabold text-xs sm:text-sm px-4 sm:px-5 py-2 sm:py-2.5 rounded-xl glow-effect transition flex items-center gap-2 cursor-pointer">
+          <i class="fa-solid fa-basket-shopping"></i>
+          <span id="nav-cart-total" class="font-mono">৳0</span>
+          <span id="nav-cart-count" class="bg-white text-brand-600 text-[10px] px-1.5 py-0.2 rounded-full font-black">0</span>
+        </button>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="relative overflow-hidden bg-gradient-to-b from-dark-900 to-dark-950 py-10 sm:py-16 border-b border-dark-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+      <div class="lg:col-span-7 text-center lg:text-left space-y-4">
+        <div class="inline-flex items-center gap-2 bg-dark-800 border border-brand-500/30 text-brand-500 text-xs font-bold px-3 py-1 rounded-full">
+          <i class="fa-solid fa-fire text-brand-500"></i> Authentic Handcrafted Bites
+        </div>
+        <h1 class="text-3xl sm:text-5xl lg:text-6xl font-display font-extrabold tracking-tight text-white leading-tight">
+          CRAVE THE CRUNCH, <br>
+          <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-500 to-amber-400">FEEL THE MELT.</span>
+        </h1>
+        <p class="text-xs sm:text-sm text-slate-400 max-w-lg mx-auto lg:mx-0 font-normal leading-relaxed">
+          Cumilla's finest handcrafted momos, ultra-crunchy fried bites, and molten cheese fusions. Order online with live real-time kitchen tracking!
+        </p>
+        <div class="flex flex-wrap gap-3 justify-center lg:justify-start pt-2">
+          <a href="#menu-grid" class="bg-brand-600 hover:bg-brand-500 text-white font-bold text-xs sm:text-sm px-6 py-3 rounded-xl glow-effect transition flex items-center gap-2">
+            <i class="fa-solid fa-utensils"></i> Explore Menu
+          </a>
+          <button onclick="locateUserGPS()" class="bg-dark-900 hover:bg-dark-800 text-slate-200 border border-dark-700 font-bold text-xs sm:text-sm px-5 py-3 rounded-xl transition flex items-center gap-2">
+            <i class="fa-solid fa-crosshairs text-brand-500"></i> Auto GPS Location
+          </button>
+        </div>
+      </div>
+
+      <div class="lg:col-span-5 flex justify-center">
+        <div class="relative w-full max-w-sm">
+          <div class="relative bg-dark-900 border border-dark-700 p-4 rounded-3xl shadow-2xl">
+            <img src="https://images.deliveryhero.io/image/global-menu-service/FP_BD/vendor/moyf/product/10836792/c10006df-ca69-48a6-81d1-bf60041b3da0.jpg" alt="Kurkure Crunch Momo" class="w-full h-52 object-cover rounded-2xl">
+            <div class="mt-3 flex items-center justify-between">
+              <div>
+                <span class="text-[10px] text-brand-500 font-bold tracking-widest uppercase">Hot Seller</span>
+                <h3 class="font-bold text-sm text-white">Kurkure Crunch Momo</h3>
+              </div>
+              <span class="text-base font-black text-white font-mono">৳120</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Category Nav -->
+  <nav class="sticky top-[57px] sm:top-[65px] z-30 bg-dark-950/95 backdrop-blur-md border-b border-dark-800 py-3">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+      <div id="category-bar" class="no-scrollbar flex items-center gap-2 overflow-x-auto"></div>
+    </div>
+  </nav>
+
+  <!-- Menu Catalog Grid -->
+  <main id="menu-grid" class="max-w-7xl mx-auto px-4 sm:px-6 py-8 space-y-12"></main>
+
+  <!-- Mobile Floating Cart Bar -->
+  <div id="mobile-cart-bar" class="fixed bottom-3 inset-x-3 z-30 md:hidden bg-gradient-to-r from-brand-600 to-amber-600 text-white p-3.5 rounded-2xl shadow-2xl flex items-center justify-between cursor-pointer transform transition-all duration-300 translate-y-24 opacity-0" onclick="toggleCartDrawer()">
+    <div class="flex items-center gap-3">
+      <div class="bg-black/30 w-10 h-10 rounded-xl flex items-center justify-center font-black text-sm">
+        <span id="mobile-bar-qty">0</span>
+      </div>
+      <div>
+        <div class="text-[11px] font-bold text-amber-100 uppercase tracking-wider">Your Order Bag</div>
+        <div class="text-sm font-black font-mono" id="mobile-bar-total">৳0</div>
+      </div>
+    </div>
+    <div class="flex items-center gap-1 font-extrabold text-xs bg-black/20 px-3 py-1.5 rounded-lg">
+      <span>Checkout</span>
+      <i class="fa-solid fa-chevron-right text-[10px]"></i>
+    </div>
+  </div>
+
+  <!-- Cart Drawer -->
+  <div id="cart-drawer" class="fixed inset-0 z-50 hidden">
+    <div class="absolute inset-0 bg-black/75 backdrop-blur-sm transition-opacity" onclick="toggleCartDrawer()"></div>
+    <div class="fixed inset-y-0 right-0 max-w-full flex pl-10">
+      <div class="w-screen max-w-md bg-dark-900 border-l border-dark-800 text-slate-100 flex flex-col justify-between shadow-2xl">
+        <div class="p-5 border-b border-dark-800 flex items-center justify-between">
+          <div class="flex items-center gap-2.5">
+            <i class="fa-solid fa-basket-shopping text-brand-500"></i>
+            <h3 class="font-display font-bold text-base text-white">Order Bag</h3>
+          </div>
+          <button onclick="toggleCartDrawer()" class="text-slate-400 hover:text-white text-lg">✕</button>
+        </div>
+
+        <div id="cart-items-container" class="flex-1 overflow-y-auto p-5 space-y-3"></div>
+
+        <div class="p-5 border-t border-dark-800 bg-dark-950 space-y-3">
+          <div class="space-y-1 text-xs">
+            <div class="flex justify-between text-slate-400">
+              <span>Subtotal</span>
+              <span id="cart-subtotal" class="font-mono text-white">৳0</span>
+            </div>
+            <div class="flex justify-between text-slate-400">
+              <span>Delivery Charge</span>
+              <span id="cart-delivery" class="font-mono text-white">৳50</span>
+            </div>
+            <div class="flex justify-between bg-brand-600/10 border border-brand-500/20 text-brand-500 p-2 rounded-xl text-xs font-bold">
+              <span>🎁 Earned Loyalty Points</span>
+              <span id="cart-points">+0 pts</span>
+            </div>
+            <div class="flex justify-between text-base font-black text-white pt-2 border-t border-dark-800">
+              <span>Grand Total</span>
+              <span id="cart-grand-total" class="font-mono text-brand-500">৳0</span>
+            </div>
+          </div>
+
+          <button onclick="openCheckoutModal()" id="cart-checkout-btn" class="w-full bg-brand-600 hover:bg-brand-500 text-white font-extrabold py-3.5 rounded-xl text-sm transition glow-effect flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50">
+            <span>Proceed to Checkout</span>
+            <i class="fa-solid fa-arrow-right"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Checkout & Payment Modal -->
+  <div id="checkout-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md hidden items-center justify-center p-4">
+    <div class="bg-dark-900 border border-dark-700 rounded-3xl max-w-lg w-full p-6 space-y-4 shadow-2xl text-slate-100 max-h-[90vh] overflow-y-auto">
+      
+      <div class="flex justify-between items-center border-b border-dark-800 pb-3">
+        <div>
+          <h3 class="font-display font-bold text-base text-white">Delivery & Payment</h3>
+          <p class="text-xs text-slate-400">Confirm your delivery location & preferred payment method</p>
+        </div>
+        <button onclick="closeCheckoutModal()" class="text-slate-400 hover:text-white text-lg">✕</button>
+      </div>
+
+      <!-- GPS Detection Box -->
+      <div class="bg-dark-950 border border-dark-800 rounded-2xl p-3 flex items-center justify-between gap-3">
+        <div>
+          <div class="text-xs font-bold text-white flex items-center gap-1.5">
+            <i class="fa-solid fa-location-crosshairs text-brand-500"></i> Automatic GPS Detection
+          </div>
+          <p class="text-[10px] text-slate-400">Fetch accurate map coordinates with a single tap</p>
+        </div>
+        <button onclick="locateUserGPS()" id="gps-btn" class="bg-brand-600 hover:bg-brand-500 text-white text-xs font-bold px-3 py-1.5 rounded-xl transition flex items-center gap-1 shrink-0">
+          <i class="fa-solid fa-location-arrow"></i> Detect
+        </button>
+      </div>
+
+      <div class="space-y-3 text-xs">
+        <div>
+          <label class="font-bold text-slate-300 block mb-1">Customer Full Name *</label>
+          <input type="text" id="cust-name" placeholder="Enter your full name" class="w-full bg-dark-950 border border-dark-700 rounded-xl px-3.5 py-2 text-xs text-white focus:outline-none focus:border-brand-500">
+        </div>
+
+        <div>
+          <label class="font-bold text-slate-300 block mb-1">Mobile Number * (Points will be credited here)</label>
+          <input type="tel" id="cust-phone" placeholder="01XXXXXXXXX" class="w-full bg-dark-950 border border-dark-700 rounded-xl px-3.5 py-2 text-xs font-mono text-white focus:outline-none focus:border-brand-500">
+        </div>
+
+        <div>
+          <label class="font-bold text-slate-300 block mb-1">Full Delivery Address (House / Road / Area) *</label>
+          <textarea id="cust-address" rows="2" placeholder="e.g. House 12, Road 4, Kandirpar, Cumilla..." class="w-full bg-dark-950 border border-dark-700 rounded-xl px-3.5 py-2 text-xs text-white focus:outline-none focus:border-brand-500"></textarea>
+        </div>
+
+        <div>
+          <label class="font-bold text-slate-300 block mb-1">Kitchen / Rider Note (Optional)</label>
+          <input type="text" id="cust-note" placeholder="e.g. Extra sauce, less spicy" class="w-full bg-dark-950 border border-dark-700 rounded-xl px-3.5 py-2 text-xs text-white focus:outline-none focus:border-brand-500">
+        </div>
+
+        <!-- Payment Method Options -->
+        <div class="space-y-2 pt-1">
+          <label class="font-bold text-slate-300 block">Select Payment Method *</label>
+          <div class="grid grid-cols-2 gap-2">
+            <label class="flex items-center gap-2 bg-dark-950 border border-dark-700 p-2.5 rounded-xl cursor-pointer hover:border-brand-500">
+              <input type="radio" name="pay-method" value="COD" checked onchange="togglePaymentBox('COD')" class="accent-orange-500">
+              <span class="font-bold text-slate-200 text-xs">Cash on Delivery</span>
+            </label>
+            <label class="flex items-center gap-2 bg-dark-950 border border-dark-700 p-2.5 rounded-xl cursor-pointer hover:border-pink-500">
+              <input type="radio" name="pay-method" value="bKash" onchange="togglePaymentBox('bKash')" class="accent-pink-500">
+              <span class="font-bold text-pink-500 text-xs flex items-center gap-1">
+                <i class="fa-solid fa-mobile-screen"></i> bKash (Send Money)
+              </span>
+            </label>
+          </div>
+        </div>
+
+        <!-- bKash Send Money Details -->
+        <div id="bkash-info-box" class="hidden bg-pink-950/30 border border-pink-700/50 rounded-2xl p-3.5 space-y-2">
+          <div class="text-[11px] text-pink-300 space-y-1">
+            <p>1. Open the bKash app and tap on <b>Send Money</b>.</p>
+            <p>2. Receiver Number: <b class="font-mono text-pink-400 text-xs select-all">01870884845</b> (Personal - Send Money Only)</p>
+            <p>3. Payable Amount: <b id="bkash-pay-amount" class="font-mono text-white">৳0</b></p>
+            <p>4. Put the last 4 digits of your mobile number in the reference.</p>
+          </div>
+          <div>
+            <label class="font-bold text-pink-200 block mb-1 text-[11px]">bKash Transaction ID (TrxID) *</label>
+            <input type="text" id="cust-trxid" placeholder="e.g. BL9X7K12..." class="w-full bg-dark-950 border border-pink-700/60 rounded-xl px-3 py-2 text-xs font-mono uppercase text-white focus:outline-none focus:border-pink-500">
+          </div>
+        </div>
+
+        <div id="gps-coords-display" class="hidden text-[10px] text-emerald-400 font-mono bg-emerald-950/30 border border-emerald-800/40 p-2 rounded-xl">
+          📍 GPS Coordinates: <span id="gps-coords-val"></span>
+        </div>
+      </div>
+
+      <button onclick="placeFinalOrder()" id="place-order-btn" class="w-full bg-brand-600 hover:bg-brand-500 text-white font-extrabold py-3.5 rounded-xl text-sm transition glow-effect flex items-center justify-center gap-2 cursor-pointer">
+        <i class="fa-solid fa-circle-check"></i> Confirm Order
+      </button>
+
+    </div>
+  </div>
+
+  <!-- Live Tracking Modal -->
+  <div id="track-modal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-md hidden items-center justify-center p-4">
+    <div class="bg-dark-900 border border-dark-700 rounded-3xl max-w-md w-full p-6 space-y-4 shadow-2xl text-slate-100">
+      
+      <div class="flex justify-between items-center border-b border-dark-800 pb-3">
+        <div class="flex items-center gap-2">
+          <i class="fa-solid fa-satellite-dish text-brand-500 animate-pulse text-sm"></i>
+          <h3 class="font-display font-bold text-base text-white">Live Order Tracking</h3>
+        </div>
+        <button onclick="closeTrackModal()" class="text-slate-400 hover:text-white text-lg">✕</button>
+      </div>
+
+      <div class="flex gap-2">
+        <input type="text" id="track-id-input" placeholder="Order ID (e.g. MM-1001)" class="w-full bg-dark-950 border border-dark-700 rounded-xl px-3 py-2 text-xs font-mono uppercase text-white focus:outline-none focus:border-brand-500">
+        <button onclick="runManualTracking()" class="bg-brand-600 hover:bg-brand-500 text-white font-bold px-4 py-2 rounded-xl text-xs transition shrink-0">Search</button>
+      </div>
+
+      <div id="track-status-box" class="space-y-4 pt-2">
+        <div class="text-center py-8 text-slate-500 text-xs">Enter your Order ID above to track status.</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="bg-dark-950 border-t border-dark-800 py-10 text-xs text-slate-400">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 grid grid-cols-1 md:grid-cols-3 gap-8 pb-8 border-b border-dark-900">
+      
+      <div class="space-y-2.5">
+        <div class="flex items-center gap-2.5">
+          <img src="logo.png" class="h-8 w-8 rounded-xl object-contain bg-dark-900 border border-dark-800 p-0.5" alt="Logo">
+          <span class="font-display font-black text-white text-sm">MOMOLOGY</span>
+        </div>
+        <p class="leading-relaxed">Cumilla's premier momo and crispy fusion destination. Authentic taste meets uncompromising quality.</p>
+        <div class="pt-1">
+          <a href="https://facebook.com/momoloogy" target="_blank" class="inline-flex items-center gap-2 text-brand-500 hover:text-brand-400 font-bold">
+            <i class="fa-brands fa-facebook-f"></i> facebook.com/momoloogy
+          </a>
+        </div>
+      </div>
+
+      <div>
+        <h4 class="font-bold text-white mb-2">Outlet Location</h4>
+        <p class="leading-relaxed text-slate-300">
+          Darul Khadem, Dhanmondi Road-06,<br>
+          Racecourse, Adarsha Sadar,<br>
+          Cumilla - 3500
+        </p>
+        <p class="mt-2 text-slate-400">bKash Send Money: <b class="text-white font-mono">01870884845</b></p>
+      </div>
+
+      <div>
+        <h4 class="font-bold text-white mb-2">Loyalty Benefits</h4>
+        <p class="leading-relaxed">Get 10% points refunded automatically on every order with your mobile number.</p>
+        <a href="https://rewards.momoloogy.me" target="_blank" class="text-brand-500 font-bold inline-block mt-2 hover:underline">Visit Rewards Club Portal ➔</a>
+      </div>
+
+    </div>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 pt-6 flex flex-col sm:flex-row items-center justify-between text-[11px] text-slate-500 gap-2">
+      <p>© 2026 MOMOLOGY. All Rights Reserved.</p>
+      <p>Crave & Chemistry — Racecourse, Cumilla</p>
+    </div>
+  </footer>
+
+  <!-- Firebase & App Engine -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getFirestore, doc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+    const firebaseConfig = { projectId: "momology-loyalty" };
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    const menuItems = [
+      {"section": "STEAM MOMO (5 Pcs)", "name": "Classic Steam Momo", "desc": "5 pcs - Authentic, pillowy-soft steamed dumplings packed with a savory, juicy chicken filling. Melt-in-your-mouth goodness served fresh with our signature dipping sauce.", "price": 100, "img": "https://images.deliveryhero.io/image/global-menu-service/FP_BD/vendor/moyf/product/10836786/8c442100-87ac-4e04-a233-93102d94ac0d.jpg"},
+      {"section": "STEAM MOMO (5 Pcs)", "name": "Spicy Naga Fire Momo", "desc": "5 pcs - Pillowy-soft steamed dumplings infused with our explosive, fiery house-made Naga paste. Perfectly balancing intense local heat with a burst of juicy chicken goodness inside!", "price": 110, "img": "https://images.deliveryhero.io/image/global-menu-service/FP_BD/vendor/moyf/product/10836788/1e3cf4a1-d132-43f2-8dc2-9ae9de4f91c0.jpg"},
+      {"section": "STEAM MOMO (5 Pcs)", "name": "Sausage Carnival Momo", "desc": "5 pcs - A meat-lover's dream! Juicy, savory chicken sausages finely diced and infused into our signature minced chicken filling, steamed to perfection for an extra smoky burst", "price": 130, "img": "https://images.deliveryhero.io/image/global-menu-service/FP_BD/vendor/moyf/product/10836787/2f5caa2a-1176-4c16-aa84-09cdc0814381.jpg"},
+      {"section": "SPECIAL CHEESE MOMO (5 Pcs)", "name": "Steamed Cheesy Melt Momo", "desc": "5 pcs - Pillowy-soft steamed dumplings bursting with a rich, molten cheese center and savory chicken filling. Pure melt-in-your-mouth magic with every bite!", "price": 140, "img": "https://images.deliveryhero.io/image/global-menu-service/FP_BD/vendor/moyf/product/10836795/a7c75811-ca74-499a-8181-4768c68cbc98.jpg"},
+      {"section": "SPECIAL CHEESE MOMO (5 Pcs)", "name": "Crispy Fried Cheesy Blast", "desc": "5 pcs - Golden-fried, extra crunchy dumplings packed with a rich, molten cheese center and juicy chicken filling. A perfect combo of ultimate crunch and gooey cheese pull!", "price": 140, "img": "https://images.deliveryhero.io/image/global-menu-service/FP_BD/vendor/moyf/product/10836796/eeacef0e-e505-4f79-b2c3-b1eb6f96d4c8.jpg"},
+      {"section": "SPECIAL CHEESE MOMO (5 Pcs)", "name": "Crunch-X Kurkure Cheesy Burst", "desc": "5 pcs - The ultimate texture combination! Coated in a super-crispy batter, fried to absolute perfection, and packed with a rich, molten cheese center that pulls apart with every crunchy bite.", "price": 160, "img": "https://images.deliveryhero.io/image/global-menu-service/FP_BD/vendor/moyf/product/10836797/3e03be0a-275b-46d3-ac22-c713d4812d39.jpg"},
+      {"section": "SPECIAL CHEESE MOMO (5 Pcs)", "name": "Smoky BBQ Cheesy Melt", "desc": "5 pcs - Rich, sweet, and smoky BBQ-infused chicken dumplings packed with a gooey, molten cheese center. Perfectly balancing deep flame-grilled flavors with a rich cheese pull!", "price": 160, "img": "https://images.deliveryhero.io/image/global-menu-service/FP_BD/vendor/moyf/product/10836799/e5d6ccc2-8be9-4c56-912a-74fc97cf9be4.jpg"},
+      {"section": "SPECIAL CHEESE MOMO (5 Pcs)", "name": "Spicy Naga BBQ Cheesy Fusion", "desc": "5 pcs - The perfect fusion of fire and cream! Spicy Naga-infused chicken dumplings packed with a rich, molten cheese center that perfectly balances the explosive heat.", "price": 170, "img": "https://images.deliveryhero.io/image/global-menu-service/FP_BD/vendor/moyf/product/10836800/6efc7fd9-08db-4eaa-b376-afb142dd2ecc.jpg"},
+      {"section": "SPECIAL CHEESE MOMO (5 Pcs)", "name": "The Ultimate Motka Cheesy Bake", "desc": "5 pcs - Served sizzling hot in a traditional clay pot! Our juicy chicken dumplings are layered with rich signature sauces, baked to perfection under a thick, golden blanket of melted cheese.", "price": 170, "img": "https://images.deliveryhero.io/image/global-menu-service/FP_BD/vendor/moyf/product/10836801/eaf98041-d9a1-437e-8db6-4d5acbecaccf.jpg"},
+      {"section": "FRIED MOMO (5 Pcs)", "name": "Crispy Fried Momo", "desc": "5 pcs - Crispy on the outside, incredibly juicy on the inside! Perfectly golden-fried dumplings packed with savory chicken fillings, served with our signature dipping sauce.", "price": 100, "img": "https://images.deliveryhero.io/image/global-menu-service/FP_BD/vendor/moyf/product/10836790/fa052b4b-0d33-438b-9fdc-f86a2b627a77.jpg"},
+      {"section": "FRIED MOMO (5 Pcs)", "name": "Naga Fire Fried Momo", "desc": "5 pcs - Crispy fried dumplings tossed thoroughly inside a hot & spicy naga chili sauce", "price": 110, "img": "https://images.deliveryhero.io/image/global-menu-service/FP_BD/vendor/moyf/product/10836791/46d82fad-2c4b-45aa-a185-b2dc75b2101b.jpg"},
+      {"section": "FRIED MOMO (5 Pcs)", "name": "Kurkure Crunch Momo", "desc": "5 pcs - Coated in a super-crispy batter and fried to absolute perfection! Experience an explosive crunch with every single bite, bursting with juicy chicken goodness inside.", "price": 120, "img": "https://images.deliveryhero.io/image/global-menu-service/FP_BD/vendor/moyf/product/10836792/c10006df-ca69-48a6-81d1-bf60041b3da0.jpg"},
+      {"section": "GRAVY MOMO  (5 Pcs)", "name": "Masala Blast Momo", "desc": "Juicy chicken dumplings tossed in a rich, fiery blend of aromatic desi spices and tangy sauces, finished with a fresh sprinkle of coriander and green chilies for an intense burst of flavor.", "price": 110, "img": "https://images.deliveryhero.io/image/global-menu-service/FP_BD/vendor/moyf/product/2bf1e7bf-f009-4427-b534-1f84b304743a.jpg"},
+      {"section": "GRAVY MOMO (3 Pcs)", "name": "Soup Momo", "desc": "Try our brand new Thai Soup Momo! Loaded with mushrooms, sweet corn, egg, authentic Thai grass, and 3 succulent momos in a steaming, flavorful broth", "price": 199, "img": "https://images.deliveryhero.io/image/global-menu-service/FP_BD/vendor/moyf/product/9572ee76-4781-4021-acf4-c6e033a352a9.jpg"},
+      {"section": "BBQ MOMO (5 Pcs)", "name": "Smoky BBQ Momo", "desc": "5 pcs - Tossed in a rich, sweet, and smoky house-crafted BBQ sauce. Perfectly balancing deep flame-grilled flavors with a juicy chicken explosion inside!", "price": 120, "img": "https://images.deliveryhero.io/image/global-menu-service/FP_BD/vendor/moyf/product/10836793/9fefa147-01a0-45b4-9113-ce1d2ffd1a2d.jpg"},
+      {"section": "BBQ MOMO (5 Pcs)", "name": "Spicy Naga BBQ Fusion", "desc": "5 pcs - The ultimate clash of sweet smoke and explosive heat! Our crispy momos are tossed in a unique blend of rich smoky BBQ sauce and fiery house-made Naga paste.", "price": 130, "img": "https://images.deliveryhero.io/image/global-menu-service/FP_BD/vendor/moyf/product/10836794/d8623e63-2150-4db9-a561-963b9881aaeb.jpg"},
+      {"section": "PLATTERS & CHEESEY PLATTERS (10 Pcs)", "name": "Twin-Fire Fried Platter", "desc": "1:1 - The ultimate value feast! 5 pieces of golden-fried crispy momos and 5 pieces of fiery Naga fried momos, served with a generous side of crunchy French fries and dipping sauces.", "price": 220, "img": "https://images.deliveryhero.io/image/global-menu-service/FP_BD/vendor/moyf/product/10836802/cae9feef-c6e5-4523-a85c-bc3abf8c6ac0.jpg"},
+      {"section": "PLATTERS & CHEESEY PLATTERS (10 Pcs)", "name": "Twin-Cheese Fried Platter", "desc": "1:1 - For the ultimate cheese lovers! 5 pieces of Crispy Fried Cheesy Blast and 5 pieces of Spicy Naga Cheesy Melt momos, served with a generous side of crunchy French fries and dipping sauces.", "price": 290, "img": "https://images.deliveryhero.io/image/global-menu-service/FP_BD/vendor/moyf/product/10836805/08d87ce7-af44-4d9b-ac83-5a0990649066.jpg"},
+      {"section": "PLATTERS & CHEESEY PLATTERS (10 Pcs)", "name": "The Ultimate Kurkure Crunch Platter", "desc": "1:1 - Double the crunch, double the flavor! 5 pieces of extra-crispy Kurkure Crunch momos and 5 pieces of fiery Kurkure Naga momos, served with a generous side of hot French fries and dipping sauces.", "price": 240, "img": "https://images.deliveryhero.io/image/global-menu-service/FP_BD/vendor/moyf/product/10836803/500d9aa4-c056-4267-bc4b-de4495b84d16.jpg"},
+      {"section": "PLATTERS & CHEESEY PLATTERS (10 Pcs)", "name": "The Grand Cheesy Steamed Platter", "desc": "1:1-The absolute heavy-weight champion of our menu! 10 premium pieces (2 Steamed, 2 Naga, 2 BBQ, 2 Naga BBQ, and 2 Loaded Chicken momos) completely drowned in an overloaded, molten blanket of gooey melted cheese.", "price": 310, "img": "https://images.deliveryhero.io/image/global-menu-service/FP_BD/vendor/moyf/product/10836806/580571eb-9613-4240-9520-f3804bedac69.jpg"},
+      {"section": "PLATTERS & CHEESEY PLATTERS (10 Pcs)", "name": "Mega 5-Flavor Platter", "desc": "1:1 - Can't choose just one? Get the ultimate 10-piece feast! 2 Classic Steamed, 2 Spicy Naga, 2 Smoky BBQ, 2 Naga BBQ, and 2 Smoked Sausage momos-all on one grand platter with dipping sauces.", "price": 240, "img": "https://images.deliveryhero.io/image/global-menu-service/FP_BD/vendor/moyf/product/10836804/810aaf56-bbe5-4acd-a82b-9f2c53f847cc.jpg"},
+      {"section": "PLATTERS & CHEESEY PLATTERS (10 Pcs)", "name": "The Ultimate Kurkure Cheese Platter", "desc": "1:1-The ultimate texture explosion! 5 pieces of extra-crispy Crunch-X Cheesy Burst and 5 pieces of fiery Kurkure Naga Cheesy momos, served with a generous side of hot French fries and dipping sauces.", "price": 330, "img": "https://images.deliveryhero.io/image/global-menu-service/FP_BD/vendor/moyf/product/3091060c-8a68-4d83-8407-8ed9f8dd6a6a.jpg"},
+      {"section": "BURGER & SUB STATION", "name": "Twin-Tower Cheesy Burger", "desc": "Double juicy chicken patty, double melted cheese, fresh lettuce, tomato, cucumber & special sauce.", "price": 339, "img": "https://images.deliveryhero.io/image/global-menu-service/FP_BD/vendor/moyf/product/b581fae0-5131-44ab-a69e-e7bfc1c6b013.jpg"},
+      {"section": "BURGER & SUB STATION", "name": "Grilled Cheesy Burger", "desc": "Flame-grilled chicken, melted cheese, crisp lettuce, cucumber & creamy sauce.", "price": 249, "img": "https://images.deliveryhero.io/image/global-menu-service/FP_BD/vendor/moyf/product/98635f00-3b5d-47a1-8dda-06aa83f295ad.jpg"},
+      {"section": "BURGER & SUB STATION", "name": "Crispy Cheesy Burger", "desc": "Golden crispy chicken breast with house special sauce and melted cheese", "price": 239, "img": "https://images.deliveryhero.io/image/global-menu-service/FP_BD/vendor/moyf/product/98a96884-a25f-4121-afb6-8ba063b68869.jpg"},
+      {"section": "BURGER & SUB STATION", "name": "Sub Burger", "desc": "Grilled chicken patty with fresh tomato, cucumber & classic sauce.", "price": 160, "img": "https://images.deliveryhero.io/image/global-menu-service/FP_BD/vendor/moyf/product/4b3054b1-0bd9-42f2-ba10-8d5cba6f3f9f.jpg"},
+      {"section": "BURGER & SUB STATION", "name": "Sub Sandwich", "desc": "Grilled chicken patty with fresh tomato, cucumber & classic sauce.", "price": 160, "img": "https://images.deliveryhero.io/image/global-menu-service/FP_BD/vendor/moyf/product/28ae8d2e-3614-4b23-94cc-9b8f0197539b.jpg"},
+      {"section": "CRISPY CORNER", "name": "Crispy Fried Chicken (1pcs)", "desc": "1pcs-Extra crispy on the outside, juicy and soft on the inside.", "price": 129, "img": "https://images.deliveryhero.io/image/global-menu-service/FP_BD/vendor/moyf/product/17af9012-8e59-4f65-a224-2ee83ba5dbc4.jpg"},
+      {"section": "CRISPY CORNER", "name": "Crispy Wings", "desc": "5pcs-Golden fried chicken wings.", "price": 199, "img": "https://images.deliveryhero.io/image/global-menu-service/FP_BD/vendor/moyf/product/2146df46-3892-46c3-b7ea-23b5717cef3e.jpg"},
+      {"section": "CRISPY CORNER", "name": "BBQ Wings", "desc": "5pcs-Tossed in smoky BBQ sauce.", "price": 249, "img": "https://images.deliveryhero.io/image/global-menu-service/FP_BD/vendor/moyf/product/b6f9a08e-1448-4733-8b42-001800d3ef9e.jpg"},
+      {"section": "CRISPY CORNER", "name": "Naga Wings", "desc": "5pcs-Coated in hot & spicy naga glaze.", "price": 259, "img": "https://images.deliveryhero.io/image/global-menu-service/FP_BD/vendor/moyf/product/79d6dd31-dcde-47fb-aa05-61bda1c18fdc.jpg"},
+      {"section": "CRISPY CORNER", "name": "Crispy Chicken Finger", "desc": "5pcs-Crunchy boneless chicken strips served hot.", "price": 149, "img": "https://images.deliveryhero.io/image/global-menu-service/FP_BD/vendor/moyf/product/bd9f3f56-fdd2-4128-a468-0ef0a687ed7c.jpg"},
+      {"section": "MAINS & SIDES", "name": "Ramen", "desc": "1:1 -A comforting bowl of rich, slow-simmered chicken broth packed with springy noodles, juicy shredded chicken, soft-boiled egg, and seasonal greens, all kicked up with our signature chili oil blend.", "price": 190, "img": "https://images.deliveryhero.io/image/global-menu-service/FP_BD/vendor/moyf/product/10836807/65e84951-d401-4f95-97d0-758d874b79ce.jpg"},
+      {"section": "MAINS & SIDES", "name": "Cheesy Baked Pasta", "desc": "1:1 - Tender penne tossed in a rich, velvety pink sauce with juicy chunks of seasoned chicken, blanketed under a thick, golden layer of bubbling mozzarella cheese and baked to gooey perfection.", "price": 190, "img": "https://images.deliveryhero.io/image/global-menu-service/FP_BD/vendor/moyf/product/10836808/130f03b7-3c8d-4182-b822-bbbdf110a5e2.jpg"},
+      {"section": "MAINS & SIDES", "name": "Meatbox", "desc": "1:1 -A heavy-weight layers box! Packed with hot, crispy French fries, a massive portion of juicy seasoned chicken, and sliced chicken sausages, all drenched in our house-secret creamy garlic sauce and topped with melted cheese.", "price": 159, "img": "https://images.deliveryhero.io/image/global-menu-service/FP_BD/vendor/moyf/product/10836810/9ffab3a1-cb1b-41b9-841f-cdfdb648ebd4.jpg"},
+      {"section": "MAINS & SIDES", "name": "Crispy Golden Fries", "desc": "1:1 - Classic, golden-fried potato strips, perfectly crispy on the outside and fluffy on the inside. Tossed with a touch of sea salt and served with our signature tangy dipping sauce.", "price": 90, "img": "https://images.deliveryhero.io/image/global-menu-service/FP_BD/vendor/moyf/product/10836812/e4c69fba-6cdd-439e-932a-34cc3fa44adb.jpg"},
+      {"section": "MAINS & SIDES", "name": "Loaded Cheesy Fries", "desc": "A high-energy flavor equation! Crispy golden fries and juicy protein meat packed with fresh capsicum and black olives. All loaded with our secret special sauce, thick mayo, and a heavy blanket of melted gooey cheese. Your ultimate craving optimizer!", "price": 199, "img": "https://images.deliveryhero.io/image/global-menu-service/FP_BD/vendor/moyf/product/a4566aec-30ad-42a3-9599-0e17f52480cd.jpg"},
+      {"section": "COMBO PLATTERS", "name": "Solo Crispy Combo", "desc": "Crispy Cheesy Burger (1pcs), Crispy Wings (2 pcs),  French Fries", "price": 259, "img": "https://images.deliveryhero.io/image/global-menu-service/FP_BD/vendor/moyf/product/e3fea078-d5b5-4e98-b49e-7f308b355d7c.jpg"},
+      {"section": "COMBO PLATTERS", "name": "Momo & Wings Craze Platter", "desc": "Crispy Fried Momo (5pcs),  BBQ Wings (3pcs),  French Fries", "price": 299, "img": "https://images.deliveryhero.io/image/global-menu-service/FP_BD/vendor/moyf/product/7f14b973-fcf3-478a-8301-6e61fecf7317.jpg"},
+      {"section": "COMBO PLATTERS", "name": "The Ultimate Crispy Feast", "desc": "1:2 - Crispy Fried Chicken (1pcs), Naga Wings (3pcs),  Crispy Chicken Finger (3pcs),  Loaded Cheesy Fries", "price": 449, "img": "https://images.deliveryhero.io/image/global-menu-service/FP_BD/vendor/moyf/product/1be7da0f-afcf-4c2e-bb28-49e76975304d.jpg"},
+      {"section": "COMBO PLATTERS", "name": "Momology Mega Fusion Platter", "desc": "1:3 - Kurkure Crunch Momo (5pcs),  Crispy Cheesy Burger (1pcs),  BBQ Wings (3pcs),  Loaded Cheesy Fries", "price": 449, "img": "https://images.deliveryhero.io/image/global-menu-service/FP_BD/vendor/moyf/product/6c3b7f40-0187-47f8-8884-e0cf2c7cca52.jpg"},
+      {"section": "COMBO PLATTERS", "name": "The Big Brother Feast", "desc": "1:2 - Big brother Cheesy burger(1pcs),bbq wings (3pcs),Crispy Chicken Finger(3pcs),meatbox 1pcs", "price": 679, "img": "https://images.deliveryhero.io/image/global-menu-service/FP_BD/vendor/moyf/product/1d8f834f-1f98-4d5d-bce9-a326380d1d53.jpg"}
+    ];
+
+    let cart = JSON.parse(localStorage.getItem('momo_night_cart') || "{}");
+    let userLoc = JSON.parse(localStorage.getItem('momo_user_loc') || "null");
+
+    function initUI() {
+      const catBar = document.getElementById('category-bar');
+      const menuGrid = document.getElementById('menu-grid');
+      const sections = [...new Set(menuItems.map(i => i.section))];
+
+      let barHtml = `<button onclick="filterCat('ALL', this)" class="cat-pill bg-brand-600 text-white font-bold text-xs px-4 py-2 rounded-xl shrink-0 transition">All Items</button>`;
+      sections.forEach(s => {
+        barHtml += `<button onclick="filterCat('${s}', this)" class="cat-pill bg-dark-900 hover:bg-dark-800 text-slate-300 border border-dark-700 font-bold text-xs px-4 py-2 rounded-xl shrink-0 transition">${s}</button>`;
+      });
+      catBar.innerHTML = barHtml;
+
+      let gridHtml = '';
+      sections.forEach(s => {
+        const items = menuItems.filter(i => i.section === s);
+        gridHtml += `
+          <div id="cat-${s.replace(/[^a-zA-Z0-9]/g, '')}" class="cat-group space-y-4">
+            <div class="flex items-center justify-between border-b border-dark-800 pb-2.5">
+              <h2 class="font-display text-xl sm:text-2xl font-black text-white">${s}</h2>
+              <span class="text-xs font-mono text-brand-500 font-bold">${items.length} Dishes</span>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+              ${items.map(item => `
+                <div class="bg-dark-900 border border-dark-800 hover:border-dark-700 rounded-3xl overflow-hidden shadow-lg transition flex flex-col justify-between group">
+                  <div class="relative overflow-hidden aspect-[16/10] bg-dark-950">
+                    <img src="${item.img}" alt="${item.name}" loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" onerror="this.src='https://via.placeholder.com/300x200?text=MOMOLOGY'">
+                    <span class="absolute top-3 right-3 bg-black/80 backdrop-blur-md text-white font-mono font-black text-xs px-2.5 py-1 rounded-full border border-white/10">৳${item.price}</span>
+                  </div>
+                  <div class="p-4 flex-1 flex flex-col justify-between space-y-3">
+                    <div>
+                      <h3 class="font-bold text-sm text-white leading-snug">${item.name}</h3>
+                      <p class="text-xs text-slate-400 mt-1 line-clamp-2 leading-relaxed">${item.desc}</p>
+                    </div>
+                    <div class="pt-2 flex items-center justify-between border-t border-dark-800">
+                      <span class="text-xs font-mono font-black text-brand-500">৳${item.price}</span>
+                      <button onclick="addToCart('${item.name.replace(/'/g, "\\'")}', ${item.price}, '${item.img}')" class="bg-dark-800 hover:bg-brand-600 text-slate-200 hover:text-white border border-dark-700 hover:border-brand-500 text-xs font-bold px-3 py-1.5 rounded-xl transition flex items-center gap-1.5 cursor-pointer">
+                        <i class="fa-solid fa-plus text-[10px]"></i> Add to Bag
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        `;
+      });
+      menuGrid.innerHTML = gridHtml;
+
+      if (userLoc) {
+        document.getElementById('nav-location-text').innerText = userLoc.address || "GPS Active";
+      }
+      refreshCart();
+    }
+
+    window.filterCat = function(s, btn) {
+      document.querySelectorAll('.cat-pill').forEach(b => {
+        b.className = "cat-pill bg-dark-900 hover:bg-dark-800 text-slate-300 border border-dark-700 font-bold text-xs px-4 py-2 rounded-xl shrink-0 transition";
+      });
+      btn.className = "cat-pill bg-brand-600 text-white font-bold text-xs px-4 py-2 rounded-xl shrink-0 transition";
+
+      if (s === 'ALL') {
+        document.querySelectorAll('.cat-group').forEach(el => el.classList.remove('hidden'));
+      } else {
+        document.querySelectorAll('.cat-group').forEach(el => {
+          if (el.id === `cat-${s.replace(/[^a-zA-Z0-9]/g, '')}`) {
+            el.classList.remove('hidden');
+            el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          } else {
+            el.classList.add('hidden');
+          }
+        });
+      }
+    };
+
+    window.addToCart = function(name, price, img) {
+      if (!cart[name]) cart[name] = { name, price, img, qty: 1 };
+      else cart[name].qty += 1;
+      saveCart();
+      refreshCart();
+    };
+
+    window.alterQty = function(name, delta) {
+      if (cart[name]) {
+        cart[name].qty += delta;
+        if (cart[name].qty <= 0) delete cart[name];
+        saveCart();
+        refreshCart();
+      }
+    };
+
+    function saveCart() {
+      localStorage.setItem('momo_night_cart', JSON.stringify(cart));
+    }
+
+    function refreshCart() {
+      let sub = 0;
+      let count = 0;
+      const container = document.getElementById('cart-items-container');
+      let html = '';
+
+      for (let k in cart) {
+        const item = cart[k];
+        const tot = item.price * item.qty;
+        sub += tot;
+        count += item.qty;
+
+        html += `
+          <div class="flex items-center justify-between gap-3 bg-dark-950 p-3 rounded-2xl border border-dark-800">
+            <img src="${item.img}" class="w-12 h-12 rounded-xl object-cover bg-dark-800" onerror="this.src='https://via.placeholder.com/48'">
+            <div class="flex-1 min-w-0">
+              <h4 class="text-xs font-bold text-white truncate">${item.name}</h4>
+              <span class="text-xs font-mono font-bold text-brand-500">৳${tot}</span>
+            </div>
+            <div class="flex items-center gap-1.5 bg-dark-800 rounded-lg p-1 border border-dark-700">
+              <button onclick="alterQty('${item.name}', -1)" class="w-5 h-5 rounded bg-dark-700 font-bold text-xs text-white hover:bg-dark-600">-</button>
+              <span class="font-mono text-xs font-bold w-4 text-center text-white">${item.qty}</span>
+              <button onclick="alterQty('${item.name}', 1)" class="w-5 h-5 rounded bg-dark-700 font-bold text-xs text-white hover:bg-dark-600">+</button>
+            </div>
+          </div>
+        `;
+      }
+
+      container.innerHTML = html || `<div class="text-center py-20 text-slate-500 text-xs">Your bag is empty!<br>Add items from the menu.</div>`;
+
+      const delivery = sub > 0 ? 50 : 0;
+      const grandTotal = sub + delivery;
+      const points = Math.floor(grandTotal * 0.10);
+
+      document.getElementById('nav-cart-total').innerText = `৳${sub}`;
+      document.getElementById('nav-cart-count').innerText = count;
+      document.getElementById('cart-subtotal').innerText = `৳${sub}`;
+      document.getElementById('cart-delivery').innerText = `৳${delivery}`;
+      document.getElementById('cart-grand-total').innerText = `৳${grandTotal}`;
+      document.getElementById('cart-points').innerText = `+${points} pts`;
+      document.getElementById('bkash-pay-amount').innerText = `৳${grandTotal}`;
+
+      const mobileBar = document.getElementById('mobile-cart-bar');
+      if (count > 0) {
+        mobileBar.classList.remove('translate-y-24', 'opacity-0');
+        document.getElementById('mobile-bar-qty').innerText = count;
+        document.getElementById('mobile-bar-total').innerText = `৳${grandTotal}`;
+      } else {
+        mobileBar.classList.add('translate-y-24', 'opacity-0');
+      }
+
+      const checkoutBtn = document.getElementById('cart-checkout-btn');
+      if (checkoutBtn) checkoutBtn.disabled = sub === 0;
+    }
+
+    window.toggleCartDrawer = function() {
+      document.getElementById('cart-drawer').classList.toggle('hidden');
+    };
+
+    window.togglePaymentBox = function(method) {
+      const box = document.getElementById('bkash-info-box');
+      if (method === 'bKash') {
+        box.classList.remove('hidden');
+      } else {
+        box.classList.add('hidden');
+      }
+    };
+
+    window.openCheckoutModal = function() {
+      if (Object.keys(cart).length === 0) return alert("Your cart is empty!");
+      document.getElementById('cart-drawer').classList.add('hidden');
+      document.getElementById('checkout-modal').classList.remove('hidden');
+      document.getElementById('checkout-modal').classList.add('flex');
+    };
+
+    window.closeCheckoutModal = function() {
+      document.getElementById('checkout-modal').classList.add('hidden');
+      document.getElementById('checkout-modal').classList.remove('flex');
+    };
+
+    window.locateUserGPS = function() {
+      const btn = document.getElementById('gps-btn');
+      if (!navigator.geolocation) return alert("Geolocation is not supported by your browser.");
+
+      btn.disabled = true;
+      btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Detecting...`;
+
+      navigator.geolocation.getCurrentPosition(
+        (pos) => {
+          const lat = pos.coords.latitude;
+          const lng = pos.coords.longitude;
+          const coordStr = `${lat.toFixed(5)}, ${lng.toFixed(5)}`;
+          document.getElementById('gps-coords-display').classList.remove('hidden');
+          document.getElementById('gps-coords-val').innerText = coordStr;
+          
+          const text = `Cumilla (GPS: ${coordStr})`;
+          const addr = document.getElementById('cust-address');
+          if (!addr.value) addr.value = text;
+
+          userLoc = { lat, lng, address: text };
+          localStorage.setItem('momo_user_loc', JSON.stringify(userLoc));
+          document.getElementById('nav-location-text').innerText = `GPS: ${coordStr}`;
+
+          btn.disabled = false;
+          btn.innerHTML = `<i class="fa-solid fa-check text-emerald-400"></i> Done`;
+        },
+        () => {
+          btn.disabled = false;
+          btn.innerHTML = `<i class="fa-solid fa-location-arrow"></i> Detect`;
+          alert("GPS permission was denied. Please type your address manually.");
+        },
+        { enableHighAccuracy: true, timeout: 10000 }
+      );
+    };
+
+    window.placeFinalOrder = async function() {
+      const name = document.getElementById('cust-name').value.trim();
+      const phone = document.getElementById('cust-phone').value.trim();
+      const address = document.getElementById('cust-address').value.trim();
+      const note = document.getElementById('cust-note').value.trim();
+      const payMethod = document.querySelector('input[name="pay-method"]:checked').value;
+      const trxId = document.getElementById('cust-trxid').value.trim();
+
+      if (!name || !phone || !address) return alert("Name, phone number, and delivery address are required!");
+      if (phone.length < 11) return alert("Please enter a valid 11-digit mobile number!");
+
+      if (payMethod === 'bKash' && !trxId) {
+        return alert("Please provide the bKash Transaction ID (TrxID)!");
+      }
+
+      let subtotal = 0;
+      for (let k in cart) subtotal += cart[k].price * cart[k].qty;
+      const grandTotal = subtotal + 50;
+      const points = Math.floor(grandTotal * 0.10);
+      const orderId = "MM-" + Math.floor(1000 + Math.random() * 9000);
+
+      const btn = document.getElementById('place-order-btn');
+      btn.disabled = true;
+      btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Saving Order...`;
+
+      const orderData = {
+        orderId: orderId,
+        customerName: name,
+        customerPhone: phone,
+        address: address,
+        note: note,
+        gps: userLoc || null,
+        items: cart,
+        subtotal: subtotal,
+        deliveryFee: 50,
+        amount: grandTotal,
+        points: points,
+        status: 'received',
+        paymentMethod: payMethod,
+        trxId: payMethod === 'bKash' ? trxId : 'N/A',
+        createdAt: new Date().toISOString()
+      };
+
+      try {
+        await setDoc(doc(db, "orders", orderId), orderData);
+        cart = {};
+        saveCart();
+        refreshCart();
+        closeCheckoutModal();
+        alert(`Order Placed Successfully!\nOrder ID: ${orderId}\nPayment: ${payMethod}\nLoyalty Points: +${points} pts`);
+        openTrackModal(orderId);
+      } catch (err) {
+        console.error(err);
+        alert("Failed to submit order! Please check your internet connection.");
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = `<i class="fa-solid fa-circle-check"></i> Confirm Order`;
+      }
+    };
+
+    let trackUnsub = null;
+    window.openTrackModal = function(prefillId = null) {
+      document.getElementById('track-modal').classList.remove('hidden');
+      document.getElementById('track-modal').classList.add('flex');
+      if (prefillId) {
+        document.getElementById('track-id-input').value = prefillId;
+        runManualTracking();
+      }
+    };
+
+    window.closeTrackModal = function() {
+      if (trackUnsub) trackUnsub();
+      document.getElementById('track-modal').classList.add('hidden');
+      document.getElementById('track-modal').classList.remove('flex');
+    };
+
+    window.runManualTracking = function() {
+      const orderId = document.getElementById('track-id-input').value.trim().toUpperCase();
+      const box = document.getElementById('track-status-box');
+
+      if (!orderId) {
+        box.innerHTML = `<p class="text-xs text-rose-500 font-bold text-center">Please enter a valid Order ID.</p>`;
+        return;
+      }
+
+      if (trackUnsub) trackUnsub();
+      box.innerHTML = `<div class="text-center py-6 text-slate-400 text-xs"><i class="fa-solid fa-spinner fa-spin mr-1"></i> Loading live status...</div>`;
+
+      trackUnsub = onSnapshot(doc(db, "orders", orderId), (snap) => {
+        if (!snap.exists()) {
+          box.innerHTML = `<div class="text-center py-6 text-rose-500 font-bold text-xs">No order found! Please check the ID.</div>`;
+          return;
+        }
+
+        const o = snap.data();
+        const status = o.status || 'received';
+
+        const stages = [
+          { key: 'received', title: 'Order Received', desc: 'Sent to the kitchen display', icon: 'fa-clipboard-check' },
+          { key: 'preparing', title: 'Cooking in Progress', desc: 'Fresh steaming & frying', icon: 'fa-fire' },
+          { key: 'on_the_way', title: 'Out for Delivery', desc: 'Rider is on the way', icon: 'fa-motorcycle' },
+          { key: 'delivered', title: 'Delivered', desc: 'Enjoy your hot meal!', icon: 'fa-box-open' }
+        ];
+
+        let curIdx = 0;
+        if (status === 'preparing') curIdx = 1;
+        if (status === 'on_the_way') curIdx = 2;
+        if (status === 'delivered' || status === 'completed') curIdx = 3;
+
+        box.innerHTML = `
+          <div class="bg-dark-950 p-3.5 rounded-2xl border border-dark-800">
+            <div class="flex justify-between items-center mb-1">
+              <span class="text-xs text-slate-400">ID: <b class="text-white font-mono">${orderId}</b></span>
+              <span class="text-xs font-mono font-black text-brand-500">৳${o.amount}</span>
+            </div>
+            <div class="text-[11px] text-slate-400 truncate">Customer: ${o.customerName} (${o.customerPhone})</div>
+            <div class="text-[10px] text-emerald-400 mt-0.5">Payment: ${o.paymentMethod || 'COD'} ${o.trxId && o.trxId !== 'N/A' ? `(TrxID: ${o.trxId})` : ''}</div>
+          </div>
+
+          <div class="space-y-4 py-2">
+            ${stages.map((s, idx) => {
+              const done = idx <= curIdx;
+              const active = idx === curIdx;
+              return `
+                <div class="flex items-start gap-3">
+                  <div class="w-8 h-8 rounded-full flex items-center justify-center shrink-0 ${done ? 'bg-brand-600 text-white glow-effect' : 'bg-dark-800 text-slate-600'}">
+                    <i class="fa-solid ${s.icon} text-xs"></i>
+                  </div>
+                  <div>
+                    <h4 class="text-xs font-bold ${done ? 'text-white' : 'text-slate-500'} flex items-center gap-1.5">
+                      ${s.title} ${active ? '<span class="text-[9px] bg-brand-500/20 text-brand-500 border border-brand-500/30 px-2 py-0.5 rounded-full font-black animate-pulse">In Progress</span>' : ''}
+                    </h4>
+                    <p class="text-[11px] text-slate-500 leading-none mt-0.5">${s.desc}</p>
+                  </div>
+                </div>
+              `;
+            }).join('')}
+          </div>
+
+          <div class="text-center pt-2">
+            <a href="https://rewards.momoloogy.me" target="_blank" class="text-xs text-brand-500 font-bold hover:underline">
+              🎁 Claim Loyalty Points ➔
+            </a>
+          </div>
+        `;
+      });
+    };
+
+    initUI();
+  </script>
+</body>
+</html>
